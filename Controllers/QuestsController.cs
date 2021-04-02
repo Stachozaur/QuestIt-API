@@ -61,7 +61,7 @@ namespace Job.it_API.Controllers
             }
         }
 
-        [HttpGet("{categoryId:int}")]
+        [HttpGet("category/{categoryId:int}")]
         public async Task<ActionResult<QuestDTO[]>> SearchByCategory(int categoryId)
         {
             try

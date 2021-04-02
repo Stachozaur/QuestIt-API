@@ -58,12 +58,12 @@ namespace Job.it_API.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<CreateUpdateUserDTO>> GetUserData(int id)
+        [HttpGet("data/{userId:int}")]
+        public async Task<ActionResult<CreateUpdateUserDTO>> GetUserData(int userId)
         {
             try
             {
-                var user = await _repository.GetUserAsync(id);
+                var user = await _repository.GetUserAsync(userId);
                 if (user == null) return NotFound();
                 return _mapper.Map<CreateUpdateUserDTO>(user);
             }
@@ -129,17 +129,12 @@ namespace Job.it_API.Controllers
                 {
                     return BadRequest();
                 }
-
-
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to update User");
             }
         }
-
-
-
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteUser(int id)
