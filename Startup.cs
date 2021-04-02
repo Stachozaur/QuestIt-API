@@ -1,7 +1,8 @@
 using AutoMapper;
 using Job.it_classes.Data.Context;
+using Job.it_classes.Data.DAL;
+using Job.it_classes.Data.Profiles;
 using Job.it_ClassLib.Data.DAL;
-using Job.it_ClassLib.Data.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,18 +38,18 @@ namespace Job.it_API
                 options.UseSqlServer(Configuration.GetConnectionString("JobItDB"));
             }
             );
-
+            services.AddScoped<IQuestRepository, QuestRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
+                mc.AddProfile(new QuestProfile());
                 mc.AddProfile(new UserProfile());
             });
-
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMvc();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -70,7 +71,7 @@ namespace Job.it_API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
