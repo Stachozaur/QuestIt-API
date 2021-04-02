@@ -58,6 +58,21 @@ namespace Job.it_API.Controllers
             }
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<CreateUpdateUserDTO>> GetUserData(int id)
+        {
+            try
+            {
+                var user = await _repository.GetUserAsync(id);
+                if (user == null) return NotFound();
+                return _mapper.Map<CreateUpdateUserDTO>(user);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to get User");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<CreateUpdateUserDTO>> PostUser(CreateUpdateUserDTO user)
         {
