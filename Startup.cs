@@ -3,6 +3,7 @@ using Job.it_classes.Data.Context;
 using Job.it_classes.Data.DAL;
 using Job.it_classes.Data.Profiles;
 using Job.it_ClassLib.Data.DAL;
+using Job.it_ClassLib.Data.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
